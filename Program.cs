@@ -1,3 +1,4 @@
+global using dotnet7api.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
