@@ -13,7 +13,7 @@ namespace dotnet7api.Service.ChracterService
         private static List<Character> characters = new List<Character>{
 
             new Character(),
-            new Character{Id = 1,Name = "Sam"}
+            new Character{Id = "1",Name = "Sam"}
         };
         private readonly IMapper _mapper;
         private readonly DataContext _context;
@@ -27,13 +27,15 @@ namespace dotnet7api.Service.ChracterService
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
             var character = _mapper.Map<Character>(newCharacter);
-            character.Id = characters.Max(c => c.Id) + 1;
-            characters.Add(character);
-            serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
+            character.Id = Guid.NewGuid().ToString();//   characters.Max(c => c.Id) + 1;
+            _context.Characters.Add(character);
+            _context.SaveChanges();
+            var dbCharacters = await _context.Characters.ToListAsync();
+            serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id)
+        public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(string id)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
             try
@@ -70,7 +72,7 @@ namespace dotnet7api.Service.ChracterService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
+        public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(string id)
         {
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
             var dbCharacter = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);

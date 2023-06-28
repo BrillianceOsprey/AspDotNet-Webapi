@@ -26,7 +26,7 @@ namespace dotnet7api.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(string id)
         {
             return Ok(await _characterService.GetCharacterById(id));
         }
@@ -52,7 +52,7 @@ namespace dotnet7api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> DeleteCharacter(int id)
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> DeleteCharacter(string id)
         {
             var responsej = await
             _characterService.DeleteCharacter(id);

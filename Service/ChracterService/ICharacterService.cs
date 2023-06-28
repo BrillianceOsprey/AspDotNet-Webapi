@@ -9,10 +9,10 @@ namespace dotnet7api.Service.ChracterService
     {
         Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters();
 
-        Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id);
+        Task<ServiceResponse<GetCharacterDto>> GetCharacterById(string id);
 
         Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter);
         Task<ServiceResponse<GetCharacterDto>> updateCharacter(UpdateCharacterDto updateCharacter);
-        Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id);
+        Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(string id);
     }
 }
